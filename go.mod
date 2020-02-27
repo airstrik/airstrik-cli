@@ -3,7 +3,7 @@ module github.com/itsparser/airstrik
 go 1.13
 
 require (
-	cloud.google.com/go v0.41.0
+	cloud.google.com/go v0.53.0
 	github.com/gin-gonic/gin v1.5.0
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
@@ -18,7 +18,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/tebeka/selenium v0.9.9
 	golang.org/x/sys v0.0.0-20200202164722-d101bd2416d5 // indirect
-	google.golang.org/api v0.7.0
+	google.golang.org/api v0.19.0
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 )

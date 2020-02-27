@@ -1,0 +1,47 @@
+name: Go
+on: [push]
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Set up Go 1.13
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.13
+      id: go
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+
+    - name: Get dependencies
+      run: |
+        go get -v -t -d ./...
+        if [ -f Gopkg.toml ]; then
+            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+            dep ensure
+        fi
+
+    - name: Build
+      run: go build -v .
+    
+    - name: Revive Action
+      uses: morphy2k/revive-action@v1.3.1
+      with:
+        # Path of the Revive config file
+        # config: # optional
+        # Revive exclude patterns, separated by semicolons
+        # exclude: # optional
+        # Revive path pattern
+        path: .
+        
+    - name: Setup Go Actions
+      uses: variantdev/setup-go-actions@v1
+      with:
+        # The Go Actions version to download (if necessary) and use. Example: 0.5.10, 0.5, 0.x
+        go-actions-version:  0.x
+        
+    - name: Go Release Binary
+      uses: ngs/go-release.action@v1.0.2
