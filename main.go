@@ -12,6 +12,7 @@ import (
 )
 
 func main() {
+	//testing cicd
 
 	// Start a Selenium WebDriver server instance (if one is not already
 	// running).
