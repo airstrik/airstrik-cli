@@ -12,7 +12,7 @@ var (
 
 func init()  {
 	Env = os.Getenv("ENV")
-	Srv = server.GetServer("Access", 9001)
+	Srv = server.GetServer("Airstrik", 9001)
 	//Srv
 }
 
