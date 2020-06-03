@@ -1,0 +1,9 @@
+ServiceName : "Access"
+Version : "1.0.1"
+APIs :
+  - Id : "GetUser"
+    Name : "Get All the User"
+    Description : "Get all tha User for that account"
+    Url : "/user/{VersionId}/{AccountId}/"
+    Method : "POST"
+    AccessControl :
