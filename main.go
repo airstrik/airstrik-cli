@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/itsparser/airstrike/pkg/core/model/engine"
-	engine2 "github.com/itsparser/airstrike/pkg/engine"
+	"github.com/airstrik/airstrik/pkg/core/model/engine"
+	engine2 "github.com/airstrik/airstrik/pkg/engine"
 	"github.com/tebeka/selenium"
 	"io/ioutil"
 	"log"
