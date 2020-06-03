@@ -20,7 +20,7 @@ services:
   airstrik-access:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-dev
     image: airstrik/access
     container_name: access
     environment:
