@@ -1,62 +1,43 @@
-version: '3.7'
-
+version: '2'
 services:
-  postgres:
-    image: postgres:latest
-    container_name: postgres
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: db
-    restart: unless-stopped
+  airstrik-redis-service:
+    container_name: airstrik-redis-service
+    image: redis:5.0-rc3-alpine
+    volumes:
+      - ./data/redis/:/data
+    ports:
+      - 6379:6379
+
+  airstrik-postgres:
+    container_name: airstrik-postgres-service
+    image: postgres
+    restart: always
     ports:
       - 5432:5432
-    volumes:
-      - ./data/postgresql/:/var/lib/postgresql/data/ # persist data even if container shuts down
+    environment:
+      POSTGRES_PASSWORD: dockerpassword
 
-  mongo-service:
-    container_name: mongo-service
-    image: mongo:4.0.5
-    volumes:
-      - ./data/db/:/data/db
-    ports:
-      - 27017:27017
-  # Production container. Builds in release mode and run. Project will be restarted on every abort.
-  production:
-    hostname: airstrike-production
-    restart: always
-    image: itsparser/airstrike
+  airstrik-access:
     build:
       context: .
       dockerfile: Dockerfile
-      target: base
+    image: airstrik/access
+    container_name: access
     environment:
-      GIN_MODE: "release"     # Example ENV variable
-      SERVING_PORT: "*:8080"  # Example ENV variable
-    volumes:
-      - .:/home/my-app
-    working_dir: /home/my-app
+      ENV: "Local"
+      _DB_DIALECT: "postgres"
+      _DB_HOST: "account.cq02tlotebnu.ap-south-1.rds.amazonaws.com"
+      _DB_PORT: "5432"
+      _DB_USER: "postgres"
+      _DB_PASSWORD: "dockerpassword"
+      _REDIS_HOST : "greeny-redis-service:6379"
     ports:
-      - "8080:8080"  # Opened ports
-    command: bash -c "go mod download && go build -o /bin/my-app . && /bin/my-app"
-
-  # Development container. Runs in debug mode and live-reloading on every source file update.
-  development:
-    hostname: airstrike-development
+      - 9001:9001
+    volumes:
+      - .:/app
+      - ../gobase:/gobase
+      - ./data/aws/:/root/.aws
+    depends_on:
+      - airstrik-postgres
+      - airstrik-redis-service
     restart: always
-    image: itsparser/airstrike
-#    depends_on:
-#      - mongo-service
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: dev
-    environment:
-      DEBUG: "true"
-      SERVING_PORT: ":8080"
-    volumes:
-      - .:/home/airstrike
-    working_dir: /home/airstrike
-    ports:
-      - "8080:8080"
-    command: bash -c "go mod download && make serve"
