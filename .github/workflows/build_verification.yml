@@ -1,4 +1,4 @@
-name: Go
+name: build_verification
 on:
   pull_request:
     paths-ignore:
@@ -30,3 +30,7 @@ jobs:
 
       - name: Go Release Binary
         uses: ngs/go-release.action@v1.0.2
+        
+      - name: golangci-lint
+        uses: actions-contrib/golangci-lint@v1
+        
