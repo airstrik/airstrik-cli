@@ -34,13 +34,5 @@ jobs:
     - name: Test
       run: go test -v .
     
-    - name: Go Release Binary
-      uses: ngs/go-release.action@v1.0.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GOARCH: "386"
-        GOOS: linux
-        EXTRA_FILES: "LICENSE"
-    
     - name: Go-linter
       uses: Jerome1337/golint-action@v1.0.2
