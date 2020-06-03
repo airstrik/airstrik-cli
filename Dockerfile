@@ -1,6 +1,5 @@
 FROM golang:latest
 COPY ./ /app
-COPY ../gobase /gobase
 WORKDIR /app
 
 RUN go mod download
